@@ -15,7 +15,6 @@ class _CarouselcontainerState extends State<CarouselContainer> {
       borderRadius: BorderRadius.circular(12),
       child: Container(
         width: MediaQuery.of(context).size.width / 1.3,
-        height: MediaQuery.of(context).size.height / 1,
 
         // width: 300,
         decoration: BoxDecoration(

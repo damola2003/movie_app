@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:movie_app/core/movieService.dart';
 
-import 'package:movie_app/model/topRatedModel.dart';
-import 'package:movie_app/model/trendingModel.dart';
+// import 'package:movie_app/model/topRatedModel.dart';
 
-import 'package:movie_app/model/upcomingMoviesModel.dart';
+import 'package:movie_app/tvModel/popularTvSeriesModel.dart';
 
-import 'package:movie_app/movieUtils/popular.dart';
-import 'package:movie_app/model/popularModel.dart';
+import 'package:movie_app/tvModel/ratedTvModel.dart';
 
-import 'package:movie_app/movieUtils/topRated.dart';
-import 'package:movie_app/movieUtils/trendingMovies.dart';
-import 'package:movie_app/movieUtils/upcomingMovies.dart';
+import 'package:movie_app/tvModel/tvAiringModel.dart';
+import 'package:movie_app/tvModel/tvSeriesModel.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+import 'package:movie_app/tvUtils/airTvClass.dart';
+import 'package:movie_app/tvUtils/popularTvclass.dart';
+import 'package:movie_app/tvUtils/ratedTvSeries.dart';
+
+import 'package:movie_app/tvUtils/tvSeries.dart';
+
+class TvPage extends StatefulWidget {
+  const TvPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<TvPage> createState() => _TvPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _TvPageState extends State<TvPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                     size: 30,
                   ),
                   Container(
-                    margin: const EdgeInsets.only(top: 30),
+                    margin: EdgeInsets.only(top: 20),
                     child: Center(
                       child: Text("Cirama",
                           style: GoogleFonts.aBeeZee(
@@ -61,48 +63,50 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 5),
             FutureBuilder(
-                future: trendingMovies,
+                future: trendingTvSeries,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return TrendingMoviesPage(
-                      headLineText: "Trending Movies",
+                    return TrendingSeriesPage(
+                      headLineText: "Trending Tv Series",
                       data: snapshot.data!,
                     );
                   } else {
-                    return const Center(
+                    return Center(
                       child: CircularProgressIndicator(),
                     );
                   }
                 }),
-            PopularMovies(
-              headLineText: 'Popular Movies',
-              future: popularMovies,
+            PopularTvSeries(
+              future: PopularTvSerie,
+              headLineText: "Popular Tv Series",
             ),
-            UpcomingMoviesPage(
-                future: UpcomingMovies, headLineText: 'Upcoming Movies'),
-            TopRatedPage(
-              future: topRatedMovies,
-              headLineText: 'Top Rated Movies',
+            const SizedBox(height: 8),
+            AiringTvSeries(
+              future: airingToday,
+              headLineText: "On The Air",
             ),
+            const SizedBox(height: 8),
+            TopRatedSeries(
+                future: ratedSeries, headLineText: "Top Rated Series")
           ],
         ),
       ),
     );
   }
 
-  late Future<MovieClasss> trendingMovies;
-  late Future<PopularClass> popularMovies;
-  late Future<UpcomingClass> UpcomingMovies;
-  late Future<topRatedClass> topRatedMovies;
+  late Future<TvClass> trendingTvSeries;
+  late Future<PopularTvClass> PopularTvSerie;
+  late Future<AiringTvClass> airingToday;
+  late Future<TopRatedTvClass> ratedSeries;
 
   MovieServices movieServices = MovieServices();
 
   @override
   void initState() {
-    trendingMovies = movieServices.getTrendingMovies();
-    popularMovies = movieServices.getPopularMovies();
-    UpcomingMovies = movieServices.getUpcomingMovies();
-    topRatedMovies = movieServices.getTopRatedMovies();
+    trendingTvSeries = movieServices.getTrendingTvSeries();
+    PopularTvSerie = movieServices.getPopularTvSeries();
+    airingToday = movieServices.getAiringTvSeries();
+    ratedSeries = movieServices.getRatedTvSeries();
     super.initState();
   }
 }
