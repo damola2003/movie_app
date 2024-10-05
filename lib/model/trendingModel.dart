@@ -1,8 +1,10 @@
 class MovieClasss {
   int? page;
   List<Results>? results;
+  int? totalPages;
+  int? totalResults;
 
-  MovieClasss({this.page, this.results});
+  MovieClasss({this.page, this.results, this.totalPages, this.totalResults});
 
   MovieClasss.fromJson(Map<String, dynamic> json) {
     page = json['page'];
@@ -12,6 +14,8 @@ class MovieClasss {
         results!.add(new Results.fromJson(v));
       });
     }
+    totalPages = json['total_pages'];
+    totalResults = json['total_results'];
   }
 
   Map<String, dynamic> toJson() {
@@ -20,6 +24,8 @@ class MovieClasss {
     if (this.results != null) {
       data['results'] = this.results!.map((v) => v.toJson()).toList();
     }
+    data['total_pages'] = this.totalPages;
+    data['total_results'] = this.totalResults;
     return data;
   }
 }

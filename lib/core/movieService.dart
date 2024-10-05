@@ -39,6 +39,7 @@ class MovieServices {
     );
 
     if (response.statusCode == 200) {
+      print("success${response.statusCode}");
       return MovieClasss.fromJson(json.decode(response.body));
     } else {
       throw Exception("Failed to load Movie data");
@@ -50,7 +51,8 @@ class MovieServices {
       Uri.parse(popularApiUrl),
     );
     if (response.statusCode == 200) {
-      // log("success${response.body}");
+      // print("hello${response}");
+      print("success${response.body}");
       return PopularClass.fromJson(json.decode(response.body));
     } else {
       throw Exception("Failed to load Movie data");
